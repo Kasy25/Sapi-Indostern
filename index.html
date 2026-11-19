@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sapi Indostern – Jual Sapi Langsung dari Peternak</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap"
+    />
+    <style>
+      :root {
+        --rumput: #23402e;
+        --rumput-2: #2f5640;
+        --jerami: #e0ae35;
+        --kertas: #f2f5ef;
+        --tinta: #17211b;
+        --abu: #66726a;
+        --garis: #d6ddd3;
+        --putih: #fff;
+        --merah: #b3372b;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        font-family: "Bricolage Grotesque", system-ui, sans-serif;
+        background: var(--kertas);
+        color: var(--tinta);
+        line-height: 1.5;
+      }
+      a {
+        color: inherit;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      :focus-visible {
+        outline: 3px solid var(--jerami);
+        outline-offset: 2px;
+      }
+
+      .top {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 14px 5vw;
+        background: var(--rumput);
+        color: var(--putih);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+      .logo {
+        font-weight: 800;
+        font-size: 1.25rem;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .top input {
+        flex: 1;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 8px;
+        min-width: 0;
+      }
+      .btn-cart {
+        background: var(--jerami);
+        color: var(--tinta);
+        border: 0;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .btn-cart span {
+        background: var(--tinta);
+        color: var(--putih);
+        border-radius: 99px;
+        padding: 1px 8px;
+        margin-left: 6px;
+        font-size: 0.85rem;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 40px;
+        align-items: center;
+        padding: 64px 5vw;
+        background: var(--rumput);
+        color: var(--putih);
+      }
+      .hero h1 {
+        font-size: clamp(2rem, 5vw, 3.6rem);
+        line-height: 1.05;
+        font-weight: 800;
+        max-width: 15ch;
+      }
+      .hero p {
+        margin: 20px 0 28px;
+        max-width: 52ch;
+        color: #d5e2d8;
+      }
+      .btn {
+        display: inline-block;
+        background: var(--jerami);
+        color: var(--tinta);
+        padding: 13px 22px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        border: 0;
+        cursor: pointer;
+      }
+      .btn:hover {
+        filter: brightness(1.07);
+      }
+      .btn.full {
+        width: 100%;
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* anting telinga sapi: elemen khas halaman ini */
+      .tag-demo {
+        display: flex;
+        justify-content: center;
+      }
+      .tag {
+        position: relative;
+        background: var(--jerami);
+        color: var(--tinta);
+        width: 210px;
+        padding: 54px 20px 24px;
+        border-radius: 14px 14px 40px 40px;
+        transform: rotate(6deg);
+        box-shadow: 0 18px 30px rgba(0, 0, 0, 0.28);
+      }
+      .tag .lubang {
+        position: absolute;
+        top: 16px;
+        left: 50%;
+        width: 22px;
+        height: 22px;
+        margin-left: -11px;
+        border-radius: 50%;
+        background: var(--rumput);
+        box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.4);
+      }
+      .tag b {
+        display: block;
+        font-size: 2rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .tag small {
+        display: block;
+        margin-top: 10px;
+        font-size: 1rem;
+      }
+
+      .jaminan {
+        display: flex;
+        justify-content: space-around;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding: 18px 5vw;
+        background: var(--putih);
+        border-bottom: 1px solid var(--garis);
+      }
+      .jaminan p {
+        color: var(--abu);
+      }
+      .jaminan b {
+        color: var(--tinta);
+      }
+
+      main {
+        padding: 40px 5vw 64px;
+      }
+      .filter {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      #chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .chip {
+        border: 1px solid var(--garis);
+        background: var(--putih);
+        padding: 8px 16px;
+        border-radius: 99px;
+        cursor: pointer;
+      }
+      .chip.aktif {
+        background: var(--rumput);
+        color: var(--putih);
+        border-color: var(--rumput);
+      }
+      select {
+        padding: 9px 12px;
+        border: 1px solid var(--garis);
+        border-radius: 8px;
+        background: var(--putih);
+      }
+      .hasil {
+        margin: 20px 0;
+        color: var(--abu);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 22px;
+      }
+      .kartu {
+        background: var(--putih);
+        border: 1px solid var(--garis);
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .foto {
+        position: relative;
+        aspect-ratio: 4/3;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      .foto svg {
+        width: 88%;
+        height: auto;
+      }
+      .idtag {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: var(--jerami);
+        padding: 3px 12px;
+        border-radius: 99px;
+        font-weight: 800;
+        font-size: 0.85rem;
+      }
+      .habis {
+        position: absolute;
+        inset: 0;
+        background: rgba(23, 33, 27, 0.65);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 1.2rem;
+      }
+      .info {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex: 1;
+      }
+      .info h3 {
+        font-size: 1.1rem;
+      }
+      .spek {
+        color: var(--abu);
+        font-size: 0.92rem;
+      }
+      .harga {
+        font-size: 1.35rem;
+        font-weight: 800;
+        margin-top: auto;
+        padding-top: 8px;
+      }
+      .info button {
+        margin-top: 10px;
+        padding: 11px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--rumput);
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .info button:hover {
+        background: var(--rumput-2);
+      }
+      .info button:disabled {
+        background: var(--garis);
+        color: var(--abu);
+        cursor: not-allowed;
+      }
+      .kosong {
+        grid-column: 1/-1;
+        padding: 40px;
+        text-align: center;
+        color: var(--abu);
+      }
+
+      footer {
+        padding: 28px 5vw;
+        background: var(--tinta);
+        color: #b9c4bc;
+        font-size: 0.9rem;
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+        z-index: 30;
+      }
+      .overlay.buka {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .laci {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: min(420px, 100%);
+        background: var(--putih);
+        z-index: 40;
+        display: flex;
+        flex-direction: column;
+        transform: translateX(100%);
+        transition: transform 0.3s;
+      }
+      .laci.buka {
+        transform: none;
+      }
+      .laci-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--garis);
+      }
+      .laci-head button {
+        background: none;
+        border: 0;
+        cursor: pointer;
+        color: var(--abu);
+      }
+      .laci-isi {
+        flex: 1;
+        overflow: auto;
+        padding: 12px 20px;
+      }
+      .item {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 4px 12px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--garis);
+      }
+      .item small {
+        color: var(--abu);
+      }
+      .qty {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        grid-column: 1/-1;
+      }
+      .qty button {
+        width: 30px;
+        height: 30px;
+        border: 1px solid var(--garis);
+        background: var(--putih);
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .qty .hapus {
+        width: auto;
+        margin-left: auto;
+        padding: 0 10px;
+        color: var(--merah);
+        border: 0;
+      }
+      .laci-foot {
+        padding: 16px 20px;
+        border-top: 1px solid var(--garis);
+        display: grid;
+        gap: 10px;
+      }
+      .laci-foot input {
+        padding: 11px;
+        border: 1px solid var(--garis);
+        border-radius: 8px;
+      }
+      .total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.15rem;
+      }
+      .error {
+        color: var(--merah);
+        min-height: 1em;
+      }
+
+      @media (max-width: 760px) {
+        .hero {
+          grid-template-columns: 1fr;
+          padding: 40px 5vw;
+        }
+        .tag-demo {
+          display: none;
+        }
+        .top {
+          flex-wrap: wrap;
+        }
+        .top input {
+          order: 3;
+          flex-basis: 100%;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <a class="logo" href="#">Sapi Indostern</a>
+      <input
+        id="cari"
+        type="search"
+        placeholder="Cari jenis atau kota, mis. Limousin"
+        aria-label="Cari sapi"
+      />
+      <button id="btnKeranjang" class="btn-cart" aria-label="Buka keranjang">
+        Keranjang <span id="jumlah">0</span>
+      </button>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1>Sapi sehat, langsung dari kandang peternak.</h1>
+        <p>
+          Bobot ditimbang, surat kesehatan lengkap, dan bisa diantar ke rumah
+          atau masjid Anda. Cocok untuk kurban, aqiqah, atau penggemukan.
+        </p>
+        <a class="btn" href="#produk">Lihat sapi tersedia</a>
+      </div>
+      <div class="tag-demo" aria-hidden="true">
+        <div class="tag">
+          <span class="lubang"></span>
+          <b>ID 0412</b>
+          <small>Limousin<br />720 kg</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="jaminan">
+      <p><b>Surat sehat</b> dari dokter hewan</p>
+      <p><b>Timbang ulang</b> saat diterima</p>
+      <p><b>Antar</b> ke seluruh Jawa</p>
+    </section>
+
+    <main id="produk">
+      <div class="filter">
+        <div id="chips"></div>
+        <select id="urut" aria-label="Urutkan">
+          <option value="baru">Urutkan: Terbaru</option>
+          <option value="murah">Harga terendah</option>
+          <option value="mahal">Harga tertinggi</option>
+          <option value="berat">Bobot terberat</option>
+        </select>
+      </div>
+      <p id="hasil" class="hasil"></p>
+      <div id="grid" class="grid"></div>
+    </main>
+
+    <footer>
+      <p>
+        Sapi Nusantara · Pesanan dikonfirmasi lewat WhatsApp. Harga dapat
+        berubah sesuai bobot akhir.
+      </p>
+    </footer>
+
+    <div id="overlay" class="overlay"></div>
+    <aside id="laci" class="laci" aria-label="Keranjang belanja">
+      <div class="laci-head">
+        <h2>Keranjang</h2>
+        <button id="tutup" aria-label="Tutup keranjang">Tutup</button>
+      </div>
+      <div id="isi" class="laci-isi"></div>
+      <div class="laci-foot">
+        <div class="total"><span>Total</span><b id="total">Rp 0</b></div>
+        <input id="nama" placeholder="Nama Anda" />
+        <input id="alamat" placeholder="Alamat pengiriman" />
+        <button id="checkout" class="btn full">Pesan lewat WhatsApp</button>
+        <small id="pesanError" class="error"></small>
+      </div>
+    </aside>
+
+    <script>
+      // ====== PENGATURAN: ganti nomor WhatsApp Anda (format 62, tanpa + atau 0) ======
+      const NOMOR_WA = "6281287682125";
+
+      // ====== DATA SAPI: tambah/ubah sesuai stok Anda ======
+      const sapi = [
+        {
+          id: 1,
+          nama: "Limousin Jantan Super",
+          jenis: "Limousin",
+          bobot: 720,
+          umur: 36,
+          harga: 38500000,
+          kota: "Marche",
+          stok: 2,
+          warna: "#C9923F",
+          foto: "foto/Sapi Limousin.jpeg",
+        },
+        {
+          id: 2,
+          nama: "Simental Jantan Besar",
+          jenis: "Simental",
+          bobot: 680,
+          umur: 34,
+          harga: 35000000,
+          kota: "Klaten",
+          stok: 3,
+          warna: "#B5651D",
+        },
+        {
+          id: 3,
+          nama: "Brahman Cross Standar",
+          jenis: "Brahman",
+          bobot: 520,
+          umur: 30,
+          harga: 24500000,
+          kota: "Lampung",
+          stok: 5,
+          warna: "#9A9A94",
+        },
+        {
+          id: 4,
+          nama: "Sapi Pegon Super",
+          jenis: "Pegon",
+          bobot: 340,
+          umur: 30,
+          harga: 20000000,
+          kota: "Madura",
+          stok: 4,
+          warna: "#8C4A2F",
+        },
+        {
+          id: 5,
+          nama: "Sapi Jersey Standar",
+          jenis: "Jersey",
+          bobot: 380,
+          umur: 32,
+          harga: 26000000,
+          kota: "London",
+          stok: 6,
+          warna: "#E8E4D8",
+        },
+        {
+          id: 6,
+          nama: "Limousin Betina Bunting",
+          jenis: "Limousin",
+          bobot: 560,
+          umur: 40,
+          harga: 31000000,
+          kota: "Semarang",
+          stok: 1,
+          warna: "#D4A35A",
+        },
+        {
+          id: 7,
+          nama: "Sapi Jersey Super",
+          jenis: "Jersey",
+          bobot: 450,
+          umur: 28,
+          harga: 40500000,
+          kota: "London",
+          stok: 0,
+          warna: "#C07A3A",
+        },
+        {
+          id: 8,
+          nama: "Brahman Jantan Jumbo",
+          jenis: "Brahman",
+          bobot: 640,
+          umur: 38,
+          harga: 33000000,
+          kota: "Lampung",
+          stok: 2,
+          warna: "#B0B0A8",
+        },
+        {
+          id: 9,
+          nama: "Sapi Pegon Kecil",
+          jenis: "Pegon",
+          bobot: 280,
+          umur: 26,
+          harga: 17500000,
+          kota: "Madura",
+          stok: 7,
+          warna: "#7A3E26",
+        },
+      ];
+
+      const rupiah = (n) => "Rp " + n.toLocaleString("id-ID");
+      const $ = (id) => document.getElementById(id);
+
+      let filterJenis = "Semua";
+      let keranjang = [];
+      try {
+        keranjang = JSON.parse(localStorage.getItem("keranjang-sapi")) || [];
+      } catch (e) {}
+
+      // ====== GAMBAR SAPI (SVG sederhana, warna mengikuti jenis) ======
+      function gambarSapi(w) {
+        return `<svg viewBox="0 0 200 120" role="img" aria-label="Ilustrasi sapi">
+    <rect x="40" y="35" width="105" height="50" rx="22" fill="${w}"/>
+    <rect x="52" y="78" width="12" height="32" rx="5" fill="${w}"/><rect x="82" y="78" width="12" height="32" rx="5" fill="${w}"/>
+    <rect x="102" y="78" width="12" height="32" rx="5" fill="${w}"/><rect x="128" y="78" width="12" height="32" rx="5" fill="${w}"/>
+    <rect x="132" y="22" width="48" height="38" rx="16" fill="${w}"/>
+    <path d="M140 24 q-6 -14 -14 -12 M172 24 q6 -14 14 -12" stroke="#E7E0CC" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="165" cy="38" r="3" fill="#17211B"/><rect x="162" y="48" width="18" height="10" rx="5" fill="rgba(0,0,0,.2)"/>
+    <path d="M42 48 q-18 6 -14 34" stroke="${w}" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="70" cy="52" r="9" fill="rgba(0,0,0,.13)"/><circle cx="108" cy="62" r="11" fill="rgba(0,0,0,.13)"/>
+  </svg>`;
+      }
+
+      // ====== DAFTAR PRODUK ======
+      function tampilProduk() {
+        const kata = $("cari").value.toLowerCase().trim();
+        let data = sapi.filter(
+          (s) =>
+            (filterJenis === "Semua" || s.jenis === filterJenis) &&
+            (s.nama + s.jenis + s.kota).toLowerCase().includes(kata)
+        );
+
+        const urut = $("urut").value;
+        if (urut === "murah") data.sort((a, b) => a.harga - b.harga);
+        if (urut === "mahal") data.sort((a, b) => b.harga - a.harga);
+        if (urut === "berat") data.sort((a, b) => b.bobot - a.bobot);
+
+        $("hasil").textContent = `${data.length} sapi ditemukan`;
+        $("grid").innerHTML = data.length
+          ? data
+              .map(
+                (s) => `
+    <article class="kartu">
+      <div class="foto" style="background:${s.warna}22">
+        ${gambarSapi(s.warna)}
+        <span class="idtag">ID ${String(s.id).padStart(4, "0")}</span>
+        ${s.stok === 0 ? '<div class="habis">Terjual</div>' : ""}
+      </div>
+      <div class="info">
+        <h3>${s.nama}</h3>
+        <p class="spek">${s.jenis} · ${s.bobot} kg · ${s.umur} bulan</p>
+        <p class="spek">Lokasi kandang: ${s.kota}</p>
+        <p class="harga">${rupiah(s.harga)}</p>
+        <button data-id="${s.id}" ${s.stok === 0 ? "disabled" : ""}>${
+                  s.stok === 0 ? "Stok habis" : "Tambah ke keranjang"
+                }</button>
+      </div>
+    </article>`
+              )
+              .join("")
+          : '<p class="kosong">Tidak ada sapi yang cocok. Coba kata kunci atau jenis lain.</p>';
+      }
+
+      function tampilChip() {
+        const jenis = ["Semua", ...new Set(sapi.map((s) => s.jenis))];
+        $("chips").innerHTML = jenis
+          .map(
+            (j) =>
+              `<button class="chip ${
+                j === filterJenis ? "aktif" : ""
+              }" data-j="${j}">${j}</button>`
+          )
+          .join("");
+      }
+
+      // ====== KERANJANG ======
+      function simpan() {
+        localStorage.setItem("keranjang-sapi", JSON.stringify(keranjang));
+      }
+
+      function tambah(id) {
+        const s = sapi.find((x) => x.id === id);
+        const ada = keranjang.find((k) => k.id === id);
+        if (ada) {
+          if (ada.qty < s.stok) ada.qty++;
+        } else keranjang.push({ id, qty: 1 });
+        simpan();
+        tampilKeranjang();
+        bukaLaci();
+      }
+
+      function ubahQty(id, delta) {
+        const s = sapi.find((x) => x.id === id);
+        const k = keranjang.find((x) => x.id === id);
+        k.qty = Math.min(s.stok, k.qty + delta);
+        if (k.qty <= 0) keranjang = keranjang.filter((x) => x.id !== id);
+        simpan();
+        tampilKeranjang();
+      }
+
+      function hapus(id) {
+        keranjang = keranjang.filter((x) => x.id !== id);
+        simpan();
+        tampilKeranjang();
+      }
+
+      function totalHarga() {
+        return keranjang.reduce(
+          (t, k) => t + sapi.find((s) => s.id === k.id).harga * k.qty,
+          0
+        );
+      }
+
+      function tampilKeranjang() {
+        $("jumlah").textContent = keranjang.reduce((t, k) => t + k.qty, 0);
+        $("total").textContent = rupiah(totalHarga());
+        $("isi").innerHTML = keranjang.length
+          ? keranjang
+              .map((k) => {
+                const s = sapi.find((x) => x.id === k.id);
+                return `<div class="item">
+      <div><b>${s.nama}</b><br><small>${s.jenis} · ${s.bobot} kg</small></div>
+      <b>${rupiah(s.harga * k.qty)}</b>
+      <div class="qty">
+        <button data-aksi="kurang" data-id="${
+          s.id
+        }" aria-label="Kurangi">−</button>
+        <span>${k.qty}</span>
+        <button data-aksi="tambah" data-id="${s.id}" aria-label="Tambah" ${
+                  k.qty >= s.stok ? "disabled" : ""
+                }>+</button>
+        <button class="hapus" data-aksi="hapus" data-id="${s.id}">Hapus</button>
+      </div></div>`;
+              })
+              .join("")
+          : '<p class="kosong">Keranjang masih kosong. Pilih sapi dari daftar untuk memulai.</p>';
+      }
+
+      function bukaLaci() {
+        $("laci").classList.add("buka");
+        $("overlay").classList.add("buka");
+      }
+      function tutupLaci() {
+        $("laci").classList.remove("buka");
+        $("overlay").classList.remove("buka");
+      }
+
+      // ====== CHECKOUT LEWAT WHATSAPP ======
+      function checkout() {
+        const nama = $("nama").value.trim(),
+          alamat = $("alamat").value.trim();
+        if (!keranjang.length) {
+          $("pesanError").textContent = "Keranjang masih kosong.";
+          return;
+        }
+        if (!nama || !alamat) {
+          $("pesanError").textContent = "Isi nama dan alamat pengiriman dulu.";
+          return;
+        }
+        $("pesanError").textContent = "";
+        const baris = keranjang
+          .map((k) => {
+            const s = sapi.find((x) => x.id === k.id);
+            return `- ${s.nama} (ID ${String(s.id).padStart(4, "0")}) x${
+              k.qty
+            } = ${rupiah(s.harga * k.qty)}`;
+          })
+          .join("\n");
+        const pesan = `Halo, saya ingin memesan:\n${baris}\n\nTotal: ${rupiah(
+          totalHarga()
+        )}\nNama: ${nama}\nAlamat: ${alamat}`;
+        window.open(
+          `https://wa.me/${NOMOR_WA}?text=${encodeURIComponent(pesan)}`,
+          "_blank"
+        );
+      }
+
+      // ====== EVENT ======
+      $("grid").addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-id]");
+        if (b) tambah(+b.dataset.id);
+      });
+      $("chips").addEventListener("click", (e) => {
+        const b = e.target.closest("[data-j]");
+        if (b) {
+          filterJenis = b.dataset.j;
+          tampilChip();
+          tampilProduk();
+        }
+      });
+      $("isi").addEventListener("click", (e) => {
+        const b = e.target.closest("[data-aksi]");
+        if (!b) return;
+        const id = +b.dataset.id;
+        if (b.dataset.aksi === "tambah") ubahQty(id, 1);
+        if (b.dataset.aksi === "kurang") ubahQty(id, -1);
+        if (b.dataset.aksi === "hapus") hapus(id);
+      });
+      $("cari").addEventListener("input", tampilProduk);
+      $("urut").addEventListener("change", tampilProduk);
+      $("btnKeranjang").addEventListener("click", bukaLaci);
+      $("tutup").addEventListener("click", tutupLaci);
+      $("overlay").addEventListener("click", tutupLaci);
+      $("checkout").addEventListener("click", checkout);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") tutupLaci();
+      });
+
+      tampilChip();
+      tampilProduk();
+      tampilKeranjang();
+    </script>
+  </body>
+</html>
